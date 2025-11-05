@@ -1,7 +1,7 @@
 
 export type Theme = 'light' | 'dark';
 
-export type ViewMode = 'code' | 'tree' | 'table';
+export type ViewMode = 'code' | 'tree' | 'table' | 'schema';
 
 export type TreeNodeData = {
   key: string;

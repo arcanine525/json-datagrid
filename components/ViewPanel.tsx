@@ -4,6 +4,7 @@ import { ViewMode, Theme } from '../types';
 import CodeView from './CodeView';
 import TreeView from './TreeView';
 import TableView from './TableView';
+import SchemaView from './SchemaView';
 import { downloadFile, jsonToCsv, jsonToYaml } from '../utils';
 import { IconCode, IconTree, IconTable, IconDownload } from './Icons';
 
@@ -53,6 +54,7 @@ const ViewPanel: React.FC<ViewPanelProps> = ({ parsedJson, error, isTableCompati
                     <TabButton active={viewMode === 'code'} onClick={() => setViewMode('code')}><IconCode className="w-4 h-4" /> Code</TabButton>
                     <TabButton active={viewMode === 'tree'} onClick={() => setViewMode('tree')}><IconTree className="w-4 h-4" /> Tree</TabButton>
                     <TabButton active={viewMode === 'table'} onClick={() => setViewMode('table')} disabled={!isTableCompatible}><IconTable className="w-4 h-4" /> Table</TabButton>
+                    <TabButton active={viewMode === 'schema'} onClick={() => setViewMode('schema')}><IconCode className="w-4 h-4" /> Schema</TabButton>
                 </div>
                 <div className="p-2 flex gap-2">
                     <button onClick={() => handleDownload('json')} disabled={!parsedJson} className="p-2 disabled:opacity-50 rounded-md hover:bg-light-surface dark:hover:bg-dark-surface transition-colors" title="Download JSON"><IconDownload className="w-5 h-5"/></button>
@@ -70,6 +72,7 @@ const ViewPanel: React.FC<ViewPanelProps> = ({ parsedJson, error, isTableCompati
                         {viewMode === 'code' && <CodeView json={parsedJson} />}
                         {viewMode === 'tree' && <TreeView data={parsedJson} theme={theme} />}
                         {viewMode === 'table' && isTableCompatible && <TableView data={parsedJson} />}
+                        {viewMode === 'schema' && <SchemaView json={parsedJson} />}
                     </>
                 )}
             </div>

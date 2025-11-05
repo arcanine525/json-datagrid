@@ -1,3 +1,16 @@
+import JsonToTS from "json-to-ts";
+
+export const jsonToTs = (jsonObject: any): string => {
+  try {
+    const interfaces = JsonToTS(jsonObject, { rootName: 'Root' });
+    return interfaces.join('\n\n');
+  } catch (error) {
+    if (error instanceof Error) {
+      return `Error converting JSON to TypeScript: ${error.message}`;
+    }
+    return 'An unknown error occurred during conversion.';
+  }
+};
 
 export const downloadFile = (content: string, fileName: string, mimeType: string) => {
   const blob = new Blob([content], { type: mimeType });
