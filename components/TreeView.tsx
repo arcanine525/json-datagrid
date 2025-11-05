@@ -8,6 +8,12 @@ const isObject = (val: any): val is Record<string, any> => typeof val === 'objec
 const isArray = (val: any): val is any[] => Array.isArray(val);
 const isPrimitive = (val: any): val is Primitive => val === null || ['string', 'number', 'boolean'].includes(typeof val);
 
+/**
+ * Renders a styled representation of a primitive JSON value (string, number, boolean, or null).
+ * @param {object} props - The component props.
+ * @param {Primitive} props.value - The primitive value to render.
+ * @returns {JSX.Element} The styled primitive value.
+ */
 const Value: React.FC<{ value: Primitive }> = ({ value }) => {
     const type = typeof value;
     if (value === null) return <span className="text-gray-500">null</span>;
@@ -17,6 +23,15 @@ const Value: React.FC<{ value: Primitive }> = ({ value }) => {
     return <span>{String(value)}</span>;
 };
 
+/**
+ * Props for the TreeNode component.
+ * @property dataKey - The key or index of the node.
+ * @property data - The data associated with the node.
+ * @property level - The nesting level of the node.
+ * @property isExpanded - A function to check if a node at a given path is expanded.
+ * @property toggleNode - A function to toggle the expansion state of a node.
+ * @property path - The unique path to this node from the root.
+ */
 interface TreeNodeProps {
     dataKey: string | number;
     data: any;
@@ -26,6 +41,12 @@ interface TreeNodeProps {
     path: string;
 }
 
+/**
+ * A recursive component that renders a single node in the JSON tree.
+ * It handles rendering of primitives, objects, and arrays, and allows for expansion and copying.
+ * @param {TreeNodeProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered tree node.
+ */
 const TreeNode: React.FC<TreeNodeProps> = ({ dataKey, data, level, isExpanded, toggleNode, path }) => {
     const [copied, setCopied] = useState(false);
     const expanded = isExpanded(path);
@@ -101,12 +122,22 @@ const TreeNode: React.FC<TreeNodeProps> = ({ dataKey, data, level, isExpanded, t
     );
 };
 
-
+/**
+ * Props for the TreeView component.
+ * @property data - The JSON data to be displayed in the tree.
+ * @property theme - The current application theme.
+ */
 interface TreeViewProps {
   data: any;
   theme: Theme;
 }
 
+/**
+ * A component that displays a JSON object in an interactive, collapsible tree structure.
+ * It provides functionality to expand/collapse all nodes and copy the entire JSON.
+ * @param {TreeViewProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered tree view.
+ */
 const TreeView: React.FC<TreeViewProps> = ({ data }) => {
     const [expandedPaths, setExpandedPaths] = useState<Record<string, boolean>>({ root: true });
     const [rootCopied, setRootCopied] = useState(false);

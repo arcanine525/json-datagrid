@@ -2,11 +2,22 @@ import React from 'react';
 import { Theme } from '../types';
 import { IconSun, IconMoon, IconCode } from './Icons';
 
+/**
+ * Props for the Header component.
+ * @property theme - The current theme of the application ('light' or 'dark').
+ * @property setTheme - Function to update the application's theme.
+ */
 interface HeaderProps {
   theme: Theme;
   setTheme: React.Dispatch<React.SetStateAction<Theme>>;
 }
 
+/**
+ * The main header component for the application.
+ * It displays the application title and a theme toggle button.
+ * @param {HeaderProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered header component.
+ */
 const Header: React.FC<HeaderProps> = ({ theme, setTheme }) => {
   const toggleTheme = () => {
     setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));

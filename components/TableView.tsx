@@ -2,10 +2,20 @@
 import React, { useState, useMemo } from 'react';
 import { IconArrowUp, IconArrowDown } from './Icons';
 
+/**
+ * Props for the TableView component.
+ * @property data - An array of objects to be displayed in the table.
+ */
 interface TableViewProps {
   data: any[];
 }
 
+/**
+ * A component that renders a JSON array of objects into a sortable and filterable table.
+ * It dynamically generates columns from the keys of the objects.
+ * @param {TableViewProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered table view.
+ */
 const TableView: React.FC<TableViewProps> = ({ data }) => {
   const [filter, setFilter] = useState('');
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'ascending' | 'descending' } | null>(null);

@@ -1,12 +1,24 @@
 
 import { useState, useEffect } from 'react';
 
+/**
+ * Defines the shape of the result from the JSON processor.
+ * @property parsedJson - The parsed JSON object, or null if parsing fails.
+ * @property error - A descriptive error message if parsing fails, otherwise null.
+ * @property isTableCompatible - A boolean indicating if the JSON is an array of objects, suitable for table view.
+ */
 interface JsonProcessorResult {
   parsedJson: any | null;
   error: string | null;
   isTableCompatible: boolean;
 }
 
+/**
+ * A custom React hook to process and validate a raw JSON string.
+ * It provides the parsed JSON, any parsing errors, and checks for table compatibility.
+ * @param rawJson The raw JSON string to be processed.
+ * @returns An object containing the parsed JSON, error message, and table compatibility status.
+ */
 export const useJsonProcessor = (rawJson: string): JsonProcessorResult => {
   const [result, setResult] = useState<JsonProcessorResult>({
     parsedJson: null,
