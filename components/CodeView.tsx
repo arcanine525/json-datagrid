@@ -2,10 +2,19 @@
 import React, { useMemo, useState } from 'react';
 import { IconCopy, IconCheck } from './Icons';
 
+/**
+ * Props for the CodeView component.
+ * @property json - The JSON object to be displayed and highlighted.
+ */
 interface CodeViewProps {
   json: any;
 }
 
+/**
+ * Applies syntax highlighting to a JSON string by wrapping tokens in styled spans.
+ * @param jsonString The raw JSON string to highlight.
+ * @returns An HTML string with syntax highlighting.
+ */
 const syntaxHighlight = (jsonString: string): string => {
     jsonString = jsonString.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
     return jsonString.replace(/("(\\u[a-zA-Z0-9]{4}|\\[^u]|[^\\"])*"(\s*:)?|\b(true|false|null)\b|-?\d+(?:\.\d*)?(?:[eE][+\-]?\d+)?)/g, (match) => {
@@ -25,6 +34,12 @@ const syntaxHighlight = (jsonString: string): string => {
     });
 };
 
+/**
+ * A component that displays a JSON object with syntax highlighting.
+ * It also provides a button to copy the raw JSON to the clipboard.
+ * @param {CodeViewProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered code view.
+ */
 const CodeView: React.FC<CodeViewProps> = ({ json }) => {
   const [copied, setCopied] = useState(false);
   const formattedJson = useMemo(() => JSON.stringify(json, null, 2), [json]);

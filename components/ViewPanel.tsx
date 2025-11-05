@@ -8,6 +8,13 @@ import SchemaView from './SchemaView';
 import { downloadFile, jsonToCsv, jsonToYaml } from '../utils';
 import { IconCode, IconTree, IconTable, IconDownload } from './Icons';
 
+/**
+ * Props for the ViewPanel component.
+ * @property parsedJson - The parsed JSON object to display.
+ * @property error - An error message to display if JSON parsing has failed.
+ * @property isTableCompatible - A boolean indicating if the JSON can be displayed in a table.
+ * @property theme - The current theme of the application.
+ */
 interface ViewPanelProps {
   parsedJson: any | null;
   error: string | null;
@@ -15,6 +22,15 @@ interface ViewPanelProps {
   theme: Theme;
 }
 
+/**
+ * A reusable button component for the tab navigation in the ViewPanel.
+ * @param {object} props - The props for the TabButton component.
+ * @param {boolean} props.active - Whether the tab is currently active.
+ * @param {() => void} props.onClick - The function to call when the button is clicked.
+ * @param {React.ReactNode} props.children - The content to display inside the button.
+ * @param {boolean} [props.disabled] - Whether the button is disabled.
+ * @returns {JSX.Element} The rendered tab button.
+ */
 const TabButton: React.FC<{ active: boolean; onClick: () => void; children: React.ReactNode; disabled?: boolean }> = ({ active, onClick, children, disabled }) => (
     <button
         onClick={onClick}
@@ -29,6 +45,12 @@ const TabButton: React.FC<{ active: boolean; onClick: () => void; children: Reac
     </button>
 );
 
+/**
+ * The main panel for displaying the parsed JSON in various formats.
+ * It includes tabs for Code, Tree, and Table views, as well as download options.
+ * @param {ViewPanelProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered view panel.
+ */
 const ViewPanel: React.FC<ViewPanelProps> = ({ parsedJson, error, isTableCompatible, theme }) => {
     const [viewMode, setViewMode] = useState<ViewMode>('code');
 

@@ -1,6 +1,14 @@
 
 import React, { useState, useCallback, useRef } from 'react';
 
+/**
+ * Props for the InputPanel component.
+ * @property rawJson - The raw JSON string input by the user.
+ * @property setRawJson - Function to update the raw JSON string.
+ * @property error - An error message to display if JSON parsing fails, otherwise null.
+ * @property onFormat - Callback function to format the JSON input.
+ * @property onMinify - Callback function to minify the JSON input.
+ */
 interface InputPanelProps {
   rawJson: string;
   setRawJson: (value: string) => void;
@@ -9,6 +17,13 @@ interface InputPanelProps {
   onMinify: () => void;
 }
 
+/**
+ * The component responsible for handling user input.
+ * It provides a textarea for pasting JSON, and options to fetch from a URL,
+ * upload a file, drag-and-drop a file, format, and minify the JSON.
+ * @param {InputPanelProps} props - The props for the component.
+ * @returns {JSX.Element} The rendered input panel.
+ */
 const InputPanel: React.FC<InputPanelProps> = ({ rawJson, setRawJson, error, onFormat, onMinify }) => {
   const [url, setUrl] = useState('');
   const [fetchStatus, setFetchStatus] = useState<{ message: string; type: 'error' | 'success' | 'loading' } | null>(null);

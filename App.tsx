@@ -7,6 +7,12 @@ import InputPanel from './components/InputPanel';
 import ViewPanel from './components/ViewPanel';
 import { Theme } from './types';
 
+/**
+ * The root component of the JSON DataGrid application.
+ * It orchestrates the main layout and state management, bringing together the
+ * Header, InputPanel, and ViewPanel components.
+ * @returns {JSX.Element} The rendered application component.
+ */
 const App: React.FC = () => {
   const [rawJson, setRawJson] = useLocalStorage<string>('json-hero-input', '{\n  "example": "paste your json here"\n}');
   const [theme, setTheme] = useLocalStorage<Theme>('json-hero-theme', 'dark');
