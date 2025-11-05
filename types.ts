@@ -4,10 +4,7 @@
  */
 export type Theme = 'light' | 'dark';
 
-/**
- * Represents the different modes for viewing the JSON data.
- */
-export type ViewMode = 'code' | 'tree' | 'table';
+export type ViewMode = 'code' | 'tree' | 'table' | 'schema';
 
 /**
  * Represents the data structure for a node in the TreeView component.
