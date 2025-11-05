@@ -1,5 +1,11 @@
 
-export const downloadFile = (content: string, fileName: string, mimeType: string) => {
+/**
+ * Triggers a browser download for a given string content.
+ * @param content The content of the file to be downloaded.
+ * @param fileName The name of the file.
+ * @param mimeType The MIME type of the file.
+ */
+export const downloadFile = (content: string, fileName: string, mimeType: string): void => {
   const blob = new Blob([content], { type: mimeType });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
@@ -11,6 +17,12 @@ export const downloadFile = (content: string, fileName: string, mimeType: string
   URL.revokeObjectURL(url);
 };
 
+/**
+ * Converts an array of JSON objects into a CSV string.
+ * This function assumes the input is an array of flat objects.
+ * @param jsonArray An array of JSON objects.
+ * @returns The CSV string, or null if the input is invalid.
+ */
 export const jsonToCsv = (jsonArray: any[]): string | null => {
   if (!Array.isArray(jsonArray) || jsonArray.length === 0) {
     return null;
@@ -30,7 +42,13 @@ export const jsonToCsv = (jsonArray: any[]): string | null => {
   return csvRows.join('\n');
 };
 
-// Placeholder for YAML conversion. In a real project, you'd use a library like js-yaml.
+/**
+ * Converts a JSON object into a YAML string.
+ * Note: This is a basic, placeholder implementation for demonstration purposes.
+ * For a robust, real-world application, a dedicated library like 'js-yaml' is recommended.
+ * @param jsonObject The JSON object to convert.
+ * @returns The resulting YAML string.
+ */
 export const jsonToYaml = (jsonObject: any): string => {
   const toYamlString = (data: any, indent = 0): string => {
     let yamlString = '';
