@@ -1,4 +1,5 @@
 import JsonToTS from "json-to-ts";
+import { generateSchema as generateSchemaIt } from 'json-schema-it';
 
 export const jsonToTs = (jsonObject: any): string => {
   try {
@@ -101,4 +102,14 @@ export const jsonToYaml = (jsonObject: any): string => {
     }
   };
   return toYamlString(jsonObject).trimStart();
+};
+
+/**
+ * Generates a JSON schema from a given JSON object.
+ *
+ * @param {any} json - The JSON object to generate the schema from.
+ * @returns {object} The generated JSON schema.
+ */
+export const generateSchema = (json: any): object => {
+  return generateSchemaIt(json);
 };

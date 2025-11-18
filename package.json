@@ -6,16 +6,22 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
+    "json-schema-it": "^1.2.18",
     "json-to-ts": "^2.1.0",
     "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "react-dom": "^19.2.0",
+    "@monaco-editor/react": "^4.6.0"
   },
   "devDependencies": {
+    "@types/jest": "^29.5.12",
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
   }
