@@ -4,7 +4,7 @@
  */
 export type Theme = 'light' | 'dark';
 
-export type ViewMode = 'code' | 'tree' | 'table' | 'schema';
+export type ViewMode = 'code' | 'tree' | 'table' | 'schema' | 'stats' | 'query' | 'diff' | 'convert';
 
 /**
  * Represents the data structure for a node in the TreeView component.

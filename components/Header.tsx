@@ -1,27 +1,15 @@
 import React from 'react';
 import { Theme } from '../types';
-import { IconSun, IconMoon, IconCode } from './Icons';
+import { IconSun, IconMoon, IconCode, IconHelp } from './Icons';
 
-/**
- * Props for the Header component.
- * @property theme - The current theme of the application ('light' or 'dark').
- * @property setTheme - Function to update the application's theme.
- */
 interface HeaderProps {
   theme: Theme;
   setTheme: React.Dispatch<React.SetStateAction<Theme>>;
+  onOpenShortcuts: () => void;
 }
 
-/**
- * The main header component for the application.
- * It displays the application title and a theme toggle button.
- * @param {HeaderProps} props - The props for the component.
- * @returns {JSX.Element} The rendered header component.
- */
-const Header: React.FC<HeaderProps> = ({ theme, setTheme }) => {
-  const toggleTheme = () => {
-    setTheme(prevTheme => (prevTheme === 'light' ? 'dark' : 'light'));
-  };
+const Header: React.FC<HeaderProps> = ({ theme, setTheme, onOpenShortcuts }) => {
+  const toggleTheme = () => setTheme(prev => (prev === 'light' ? 'dark' : 'light'));
 
   return (
     <header className="flex-shrink-0 flex items-center justify-between p-2 bg-light-surface dark:bg-dark-surface border-b border-light-border dark:border-dark-border shadow-sm">
@@ -29,13 +17,23 @@ const Header: React.FC<HeaderProps> = ({ theme, setTheme }) => {
         <IconCode className="w-8 h-8 text-light-accent dark:text-dark-accent" />
         <h1 className="text-xl font-bold text-light-text dark:text-dark-text">JSON DataGrid</h1>
       </div>
-      <button
-        onClick={toggleTheme}
-        className="p-2 rounded-full hover:bg-light-border dark:hover:bg-dark-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-accent dark:focus:ring-dark-accent focus:ring-offset-light-surface dark:focus:ring-offset-dark-surface transition-colors"
-        aria-label="Toggle theme"
-      >
-        {theme === 'light' ? <IconMoon className="w-6 h-6" /> : <IconSun className="w-6 h-6" />}
-      </button>
+      <div className="flex items-center gap-1">
+        <button
+          onClick={onOpenShortcuts}
+          title="Keyboard shortcuts (?)"
+          aria-label="Show keyboard shortcuts"
+          className="p-2 rounded-full hover:bg-light-border dark:hover:bg-dark-border transition-colors"
+        >
+          <IconHelp className="w-5 h-5" />
+        </button>
+        <button
+          onClick={toggleTheme}
+          aria-label="Toggle theme"
+          className="p-2 rounded-full hover:bg-light-border dark:hover:bg-dark-border focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-light-accent dark:focus:ring-dark-accent focus:ring-offset-light-surface dark:focus:ring-offset-dark-surface transition-colors"
+        >
+          {theme === 'light' ? <IconMoon className="w-6 h-6" /> : <IconSun className="w-6 h-6" />}
+        </button>
+      </div>
     </header>
   );
 };
