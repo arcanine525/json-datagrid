@@ -123,7 +123,7 @@ const InputPanel: React.FC<InputPanelProps> = ({ rawJson, setRawJson, error, onF
 
   return (
     <div
-      className="w-full md:w-1/2 flex flex-col h-1/2 md:h-full border-r border-light-border dark:border-dark-border"
+      className="w-full h-full flex flex-col min-h-0 min-w-0"
       onDragOver={handleDragOver}
       onDrop={handleDrop}
     >

@@ -287,7 +287,24 @@ interface TreeViewProps {
   theme: Theme;
 }
 
+/** Estimates how many JSON values exist under a value. Cheap, recursive. */
+const estimateNodeCount = (val: any, budget = 5000): number => {
+  let n = 0;
+  const walk = (v: any) => {
+    if (n > budget) return;
+    n++;
+    if (Array.isArray(v)) v.forEach(walk);
+    else if (v && typeof v === 'object') Object.values(v).forEach(walk);
+  };
+  walk(val);
+  return n;
+};
+
 const TreeView: React.FC<TreeViewProps> = ({ data }) => {
+  // For documents above this threshold we render with everything collapsed by
+  // default and disable expand-all, so the DOM doesn't grow into the millions.
+  const nodeCount = useMemo(() => estimateNodeCount(data, 10_000), [data]);
+  const bigFileMode = nodeCount >= 10_000;
   const [expandedPaths, setExpandedPaths] = useState<Record<string, boolean>>({ root: true });
   const [rootCopied, setRootCopied] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
@@ -350,7 +367,13 @@ const TreeView: React.FC<TreeViewProps> = ({ data }) => {
     return acc;
   };
 
-  const expandAll = () => setExpandedPaths(buildPaths(data));
+  const expandAll = () => {
+    if (bigFileMode) {
+      const ok = window.confirm(`This document has ~${nodeCount.toLocaleString()}+ nodes. Expanding all may be slow. Continue?`);
+      if (!ok) return;
+    }
+    setExpandedPaths(buildPaths(data));
+  };
   const collapseAll = () => setExpandedPaths({ root: true });
   const expandToDepth = (maxDepth: number) => {
     const acc: Record<string, boolean> = { root: true };
@@ -384,6 +407,11 @@ const TreeView: React.FC<TreeViewProps> = ({ data }) => {
 
   return (
     <div className="relative font-mono text-sm">
+      {bigFileMode && (
+        <div className="px-4 py-2 text-xs bg-amber-50 dark:bg-amber-900/30 border-b border-amber-200 dark:border-amber-700 text-amber-800 dark:text-amber-200">
+          ⚡ Big document detected (~{nodeCount.toLocaleString()}+ nodes). Tree starts collapsed; use search or expand specific branches to keep things snappy.
+        </div>
+      )}
       <div className="sticky top-0 z-10 bg-light-bg/95 dark:bg-dark-bg/95 backdrop-blur border-b border-light-border dark:border-dark-border px-4 py-2 flex flex-wrap items-center gap-2">
         <button onClick={expandAll} className="px-2 py-1 text-xs bg-light-surface dark:bg-dark-surface rounded hover:bg-light-border dark:hover:bg-dark-border transition-colors">Expand all</button>
         <button onClick={collapseAll} className="px-2 py-1 text-xs bg-light-surface dark:bg-dark-surface rounded hover:bg-light-border dark:hover:bg-dark-border transition-colors">Collapse all</button>

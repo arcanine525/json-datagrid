@@ -1,0 +1,13 @@
+{
+  "name": "JSON DataGrid",
+  "short_name": "JSON DataGrid",
+  "description": "Powerful JSON viewer, editor, and toolkit. Works offline.",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#1e1e1e",
+  "theme_color": "#0e639c",
+  "icons": [
+    { "src": "/logo.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ]
+}
